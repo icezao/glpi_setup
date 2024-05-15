@@ -1,3 +1,4 @@
+#!/bin/bash
 ####################################################################
 # Citra IT - Excelência em TI
 # Procedimento: INSTALAÇÃO GLPI NO UBUNTU
