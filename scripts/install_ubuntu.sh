@@ -98,7 +98,7 @@ sudo systemctl restart apache2
 
 
 # 2.13. Download do glpi
-wget -q https://github.com/glpi-project/glpi/releases/download/10.0.7/glpi-10.0.7.tgz
+wget -q https://github.com/glpi-project/glpi/releases/download/10.0.15/glpi-10.0.15.tgz
 
 
 # 2.14. Descompactar a pasta do GLPI
