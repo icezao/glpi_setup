@@ -1,10 +1,9 @@
-#!/bin/bash
 ####################################################################
 # Citra IT - Excelência em TI
-# Procedimento: INSTALAÇÃO GLPI NO UBUNTU
+# Procedimento: INSTALAÇÃO GLPI
 # @Responsável: luciano@citrait.com.br
-# @Data: 13/06/2023
-# @Versão: 1.0
+# @Data: 23/09/2023 Versão: 1.1 update versão glpi
+# @Data: 13/06/2023 Versão: 1.0 inicial
 # @Homologado: Ubuntu 22.04
 ####################################################################
 
@@ -25,10 +24,10 @@
 sudo apt update && sudo apt dist-upgrade -y
 
 # 2.2. Reconfigurar timezone
-#sudo dpkg-reconfigure tzdata
+sudo dpkg-reconfigure tzdata
 
 # 2.3. Reiniciar
-#sudo reboot
+sudo reboot
 
 # 2.4. Instalar Apache, PHP e MySQL
 sudo apt install -y \
@@ -56,7 +55,7 @@ sudo apt install -y \
 
 # 2.5. Criar banco de dados do glpi
 sudo mysql -e "CREATE DATABASE glpi"
-sudo mysql -e "GRANT ALL PRIVILEGES ON glpi.* TO 'glpi'@'localhost' IDENTIFIED BY 'P4ssw0rd'"
+sudo mysql -e "GRANT ALL PRIVILEGES ON glpi.* TO 'glpi'@'localhost' IDENTIFIED BY 'guaraviton44'"
 sudo mysql -e "GRANT SELECT ON mysql.time_zone_name TO 'glpi'@'localhost'"
 sudo mysql -e "FLUSH PRIVILEGES"
 
@@ -68,14 +67,14 @@ mysql_tzinfo_to_sql /usr/share/zoneinfo | sudo mysql -u root mysql
 sudo a2dissite 000-default.conf
 
 # 2.8. Habilita session.cookie_httponly
-sudo sed -i 's/^session.cookie_httponly =/session.cookie_httponly = on/' /etc/php/8.1/apache2/php.ini && \
-	sudo sed -i 's/^;date.timezone =/date.timezone = America\/Sao_Paulo/' /etc/php/8.1/apache2/php.ini
+sudo sed -i 's/^session.cookie_httponly =/session.cookie_httponly = on/' /etc/php/8.3/apache2/php.ini && \
+	sudo sed -i 's/^;date.timezone =/date.timezone = America\/Sao_Paulo/' /etc/php/8.3/apache2/php.ini
 	
 
 # 2.9. Criar o virtualhost do glpi
 cat << EOF | sudo tee /etc/apache2/sites-available/glpi.conf
 <VirtualHost *:80>
-	ServerName glpi.ninjapfsense.com.br
+	ServerName glpi.guaraviton.com.br
 	DocumentRoot /var/www/glpi/public
 	<Directory /var/www/glpi/public>
 		Require all granted
@@ -98,7 +97,7 @@ sudo systemctl restart apache2
 
 
 # 2.13. Download do glpi
-wget -q https://github.com/glpi-project/glpi/releases/download/10.0.15/glpi-10.0.15.tgz
+wget -q https://github.com/glpi-project/glpi/releases/download/10.0.16/glpi-10.0.16.tgz
 
 
 # 2.14. Descompactar a pasta do GLPI
@@ -120,7 +119,7 @@ sudo php /var/www/glpi/bin/console db:install \
 	--db-port=3306 \
 	--db-name=glpi \
 	--db-user=glpi \
-	--db-password=P4ssw0rd -n -vvv
+	--db-password=guaraviton44 -n -vvv
 
 
 
@@ -162,10 +161,3 @@ EOF
 # 4.3.1. Enviar os usuários para a lixeira
 # 4.3.2. Remover permanentemente
 # 4.3.4. Configurar a url de acesso ao sistema em: Configurar -> Geral -> Configuração Geral -> URL da aplicação.
-
-####################################################################
-# 5. Finalizado!
-####################################################################
-echo "FINALIZADO! DESFRUTE DE SUA INSTALAÇÃO DE GLPI"
-	
-
